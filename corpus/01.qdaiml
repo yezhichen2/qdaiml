@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<qdaiml>
+    <category>
+        <pattern>
+            你好
+            你好吗
+            你好呀
+        </pattern>
+        <template>
+            你好
+            我很好
+            我很好，你呢
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            你吃饭了吗
+            吃饭了吗
+        </pattern>
+        <template>
+            还没呢
+            没吃，你吃了吗
+            我还不饿
+            你知道的，我从不吃饭的
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            我的名字叫({{name}}\w{1,5})
+            我的大名是({{name}}\w+)
+            我是({{name}}\w{2,})
+        </pattern>
+        <template>
+            {{set_glb_val("user_name", name)}}
+
+            你好{{name}}。
+            你好{{name}}，很好高兴见到你。
+            {% if name in ['逗丁'] %}
+                你好, 我才叫逗丁, 你不是。
+            {% endif %}
+        </template>
+    </category>
+
+
+    <category>
+        <pattern>
+            你知道我叫什么名字吗
+            ^我是谁(\?|？)?$
+            ^我是谁呀
+        </pattern>
+        <template>
+            {% if ext.user_name %}
+                哈哈，你不就是{{ext.user_name}}。
+                我当然知道啦，{{ext.user_name}}，我的亲。
+            {% endif %}
+
+            我不知道。
+            我管你是谁，我忙着呢。
+        </template>
+    </category>
+
+
+    <category name="qweather_001">
+        <pattern>
+            (查一下|查|查看|看看)今天({{qcity}}\w+)的天气
+            (查一下|查|查看|看看)({{qcity}}\w+)的天气
+            帮我看一下(今天)?({{qcity}}\w+)的天气
+            我想知道(今天)?({{qcity}}\w+)的天气
+        </pattern>
+        <template>
+            {{query_weather(qcity)}}
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            现在几点了
+            ^什么时候了.{0,3}
+            ^几点了.{0,3}
+        </pattern>
+        <template>
+            现在是 {{cur_date()}}
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            ({{day}}前天|昨天|今天|明天|后天)(是)?(星期|礼拜|周)几
+        </pattern>
+        <template>
+            {{day}}是 {{week_day(day)}}
+        </template>
+    </category>
+
+</qdaiml>
